@@ -21,7 +21,10 @@
 		6B40F50C1D474FDD0054AC15 /* GitHubSearch2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B40F50B1D474FDD0054AC15 /* GitHubSearch2UITests.swift */; };
 		6B40F51A1D47587A0054AC15 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B40F5191D47587A0054AC15 /* SearchViewController.swift */; };
 		6B40F51C1D4760F20054AC15 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B40F51B1D4760F20054AC15 /* GitHub.swift */; };
-		C1088CF8889CE19D7350A72D /* Pods_GitHubSearch2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26A42D07C49FF213A224F5C6 /* Pods_GitHubSearch2.framework */; };
+		6BCAEE381D5991FC008CA709 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BDDA8631D58543900BA90AF /* Alamofire.framework */; };
+		6BCAEE391D5991FC008CA709 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6BDDA8631D58543900BA90AF /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6BCAEE3A1D5991FC008CA709 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BDDA8641D58543900BA90AF /* SwiftyJSON.framework */; };
+		6BCAEE3B1D5991FC008CA709 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6BDDA8641D58543900BA90AF /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F585FE1717EAF7D2FB78737C /* Pods_GitHubSearch2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC7B6795979B8B637BEB9722 /* Pods_GitHubSearch2Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +44,21 @@
 			remoteInfo = GitHubSearch2;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6BCAEE3C1D5991FC008CA709 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6BCAEE3B1D5991FC008CA709 /* SwiftyJSON.framework in Embed Frameworks */,
+				6BCAEE391D5991FC008CA709 /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		26A42D07C49FF213A224F5C6 /* Pods_GitHubSearch2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GitHubSearch2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +86,9 @@
 		6B40F50D1D474FDD0054AC15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B40F5191D47587A0054AC15 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		6B40F51B1D4760F20054AC15 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
+		6BDDA8611D58542100BA90AF /* Build */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Build; path = Carthage/Build; sourceTree = "<group>"; };
+		6BDDA8631D58543900BA90AF /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		6BDDA8641D58543900BA90AF /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		BC7B6795979B8B637BEB9722 /* Pods_GitHubSearch2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GitHubSearch2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E44EA437C8872649FAFF5726 /* Pods-GitHubSearch2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubSearch2.release.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubSearch2/Pods-GitHubSearch2.release.xcconfig"; sourceTree = "<group>"; };
 		FDF36C28D3AE517B86FD5515 /* Pods-GitHubSearch2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubSearch2Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubSearch2Tests/Pods-GitHubSearch2Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -78,7 +99,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1088CF8889CE19D7350A72D /* Pods_GitHubSearch2.framework in Frameworks */,
+				6BCAEE3A1D5991FC008CA709 /* SwiftyJSON.framework in Frameworks */,
+				6BCAEE381D5991FC008CA709 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +198,9 @@
 		F8B541AD5FDA0E240ECF1FBD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6BDDA8631D58543900BA90AF /* Alamofire.framework */,
+				6BDDA8641D58543900BA90AF /* SwiftyJSON.framework */,
+				6BDDA8611D58542100BA90AF /* Build */,
 				26A42D07C49FF213A224F5C6 /* Pods_GitHubSearch2.framework */,
 				BC7B6795979B8B637BEB9722 /* Pods_GitHubSearch2Tests.framework */,
 				626EC0B5CE5970D7E6691FD4 /* Pods_GitHubSearch2UITests.framework */,
@@ -190,12 +215,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6B40F5101D474FDD0054AC15 /* Build configuration list for PBXNativeTarget "GitHubSearch2" */;
 			buildPhases = (
-				A5F33D63A5C2524C0C4383CA /* [CP] Check Pods Manifest.lock */,
 				6B40F4E21D474FDC0054AC15 /* Sources */,
 				6B40F4E31D474FDC0054AC15 /* Frameworks */,
 				6B40F4E41D474FDC0054AC15 /* Resources */,
-				B4150AA4F7DEDA520F469A12 /* [CP] Embed Pods Frameworks */,
-				C86E376CC8AF5F47EE141D97 /* [CP] Copy Pods Resources */,
+				6BDDA8671D58545800BA90AF /* ShellScript */,
+				6BCAEE3C1D5991FC008CA709 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -351,6 +375,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		6BDDA8671D58545800BA90AF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 		705C61617FAE1B6FB0C6B30A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -379,51 +418,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GitHubSearch2Tests/Pods-GitHubSearch2Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A5F33D63A5C2524C0C4383CA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		B4150AA4F7DEDA520F469A12 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GitHubSearch2/Pods-GitHubSearch2-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C86E376CC8AF5F47EE141D97 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-GitHubSearch2/Pods-GitHubSearch2-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C93EFA293958DDEC0B2369E9 /* [CP] Copy Pods Resources */ = {
@@ -603,9 +597,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5AA86361B369E123B0D3BB23 /* Pods-GitHubSearch2.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = GitHubSearch2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.arte-inc.GitHubSearch2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -616,9 +618,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E44EA437C8872649FAFF5726 /* Pods-GitHubSearch2.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = GitHubSearch2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.arte-inc.GitHubSearch2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;

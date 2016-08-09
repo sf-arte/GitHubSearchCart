@@ -22,23 +22,10 @@
 
 import Foundation
 
-import AFNetworking
+import Alamofire
 
 public typealias JSONObject = [String: AnyObject]
-
-public enum HTTPMethod {
-    case Get
-}
-
-/**
-API endpoint
-*/
-public protocol APIEndpoint {
-    var path: String { get }
-    var method: HTTPMethod { get }
-    var parameters: Parameters { get }
-    associatedtype ResponseType: JSONDecodable
-}
+public typealias RequestParamater = [String: AnyObject]
 
 /**
 Request paremeters
@@ -69,11 +56,6 @@ public enum APIError: ErrorProtocol {
 - SeeAlso: https://developer.github.com/v3/s
 */
 public class GitHubAPI {
-    private let HTTPSessionManager: AFHTTPSessionManager = {
-        let manager = AFHTTPSessionManager(baseURL: URL(string: "https://api.github.com/"))
-        manager.requestSerializer.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
-        return manager
-        }()
 
     public init() {
     }
@@ -81,74 +63,31 @@ public class GitHubAPI {
     /**
     Perform HTTP request for any endpoints.
     - Parameters:
-      - endpoint: API endpoint.
+      - params: "GET" parameters.
       - handler:  Request results handler.
     */
-    public func request<Endpoint: APIEndpoint>(endpoint: Endpoint, handler: (task: URLSessionDataTask, response: Endpoint.ResponseType?, error: ErrorProtocol?) -> Void) {
-        let success = { (task: URLSessionDataTask!, response: AnyObject?) -> Void in
-            if let JSON = response as? JSONObject {
-                do {
-                    let response = try Endpoint.ResponseType(JSON: JSON)
-                    handler(task: task, response: response, error: nil)
-                } catch {
-                    handler(task: task, response: nil, error: error)
+    public func request(params: RequestParamater, handler: (response: SearchResult<Repository>?, error: ErrorProtocol?) -> Void) {
+        Alamofire.request(.GET, "https://api.github.com/search/repositories", parameters: params, encoding: .url, headers: nil).responseJSON{ response in
+            switch response.result{
+            case .success(let value):
+                if let JSON = value as? JSONObject {
+                    do {
+                        let response = try SearchResult<Repository>(JSON: JSON)
+                        handler(response: response, error: nil)
+                    } catch {
+                        handler(response: nil, error: error)
+                    }
+                } else {
+                    handler(response: nil, error: APIError.UnexpectedResponse)
                 }
-            } else {
-                handler(task: task, response: nil, error: APIError.UnexpectedResponse)
+            case .failure(let error):
+                handler(response: nil, error: error)
+                
             }
         }
-        let failure = { (task: URLSessionDataTask?, error: NSError!) -> Void in
-            var retError = error
-            // If the error has any data, put it into "localized failure reason"
-            if let errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData,
-                let errorDescription = NSString(data: errorData as Data, encoding: String.Encoding.utf8.rawValue) {
-                    var userInfo = error.userInfo
-                    userInfo[NSLocalizedFailureReasonErrorKey] = errorDescription
-                    retError = NSError(domain: error.domain, code: error.code, userInfo: userInfo)
-            }
-            if let dataTask = task{
-                handler(task: dataTask, response: nil, error: retError)
-            }
-        }
-
-        switch endpoint.method {
-        case .Get:
-            HTTPSessionManager.get(endpoint.path, parameters: endpoint.parameters.dictionary, progress: nil,
-                                   success: success, failure: failure)
-        }
+        
     }
 
-    // MARK: - Endpoints
-
-    /**
-    - SeeAlso: https://developer.github.com/v3/search/#search-repositories
-    */
-    public struct SearchRepositories: APIEndpoint {
-        public var path = "search/repositories"
-        public var method = HTTPMethod.Get
-        public var parameters: Parameters {
-            return [
-                "q" : query,
-                "page" : page,
-            ]
-        }
-        public typealias ResponseType = SearchResult<Repository>
-
-        public let query: String
-        public let page: Int
-
-        /**
-        Search repositories
-        - Parameters:
-          - query: Search query.
-          - page:  Page. 1...
-        - Returns: Search repositories API endpoint
-        */
-        public init(query: String, page: Int) {
-            self.query = query
-            self.page = page
-        }
-    }
 }
 
 /**
