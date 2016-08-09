@@ -78,12 +78,10 @@ class SearchViewController: UITableViewController, ApplicationContextSettable {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let searchManager = searchManager , indexPath.row >= searchManager.results.count - 1 {
-            searchManager.search(reload: false) { [weak self] (error) in
-                if let error = error {
-                    print(error)
-                } else {
-                    self?.tableView.reloadData()
-                }
+            if !(searchManager.search(reload: false) { [weak self] in
+                self?.tableView.reloadData()
+                }) {
+                print("Search has not been completed.")
             }
         }
     }
@@ -98,13 +96,11 @@ extension SearchViewController: UISearchBarDelegate {
         guard let searchText = searchBar.text else { return }
         guard let searchManager = SearchRepositoriesManager(github: appContext.github, query: searchText) else { return }
         self.searchManager = searchManager
-        searchManager.search(reload: true) { [weak self] (error) in
-            if let error = error {
-                print(error)
-            } else {
-                self?.tableView.reloadData()
-                self?.searchController.isActive = false
-            }
+        if !(searchManager.search(reload: true) { [weak self] in
+            self?.tableView.reloadData()
+            self?.searchController.isActive = false
+            }) {
+            print("Search has not been completed.")
         }
     }
 }

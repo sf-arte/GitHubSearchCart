@@ -51,12 +51,12 @@ class SearchRepositoriesManager {
      - completion: Completion handler
      - Returns: True if executed
      */
-    func search(reload: Bool, completion: (error: ErrorProtocol?) -> Void) -> Bool {
+    func search(reload: Bool, completion: () -> Void) -> Bool {
         if completed || networking {
             return false
         }
         networking = true
-        github.request(params: ["q": query, "page": reload ? 1 : page]) { (response, error) in
+        github.request(params: ["q": query, "page": reload ? 1 : page]) { (response) in
             if let response = response {
                 if reload {
                     self.results.removeAll()
@@ -67,7 +67,7 @@ class SearchRepositoriesManager {
                 self.page += 1
             }
             self.networking = false
-            completion(error: error)
+            completion()
         }
         return true
     }
