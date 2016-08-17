@@ -68,15 +68,9 @@ public class GitHubAPI {
     */
     public func request(params: RequestParamater, handler: (response: SearchResult<Repository>?) -> Void) -> Void{
         Alamofire.request(.GET, "https://api.github.com/search/repositories", parameters: params, encoding: .url, headers: nil).responseJSON{ response in
-            guard let value = response.result.value else {
-                handler(response: nil)
-                return
+            let response = response.result.value.flatMap {
+                SearchResult<Repository>(json: JSON($0))
             }
-            guard let JSON = value as? JSON else {
-                handler(response: nil)
-                return
-            }
-            let response = SearchResult<Repository>(json: JSON)
             handler(response: response)
         }
         
@@ -128,9 +122,9 @@ public struct SearchResult<ItemType: JSONDecodable>: JSONDecodable {
     public let items: [ItemType]
 
     public init?(json: JSON){
-        guard let totalCount = json["total_count"].int else { return nil }
-        guard let incompleteResults = json["incomplete_results"].bool else{ return nil }
-        guard let items = json["items"].array else{ return nil }
+        guard let totalCount = json["total_count"].int,
+            let incompleteResults = json["incomplete_results"].bool,
+            let items = json["items"].array else{ return nil }
         self.totalCount = totalCount
         self.incompleteResults = incompleteResults
         var tmpItems : [ItemType] = []
@@ -173,16 +167,19 @@ public struct Repository: JSONDecodable {
     */
 
     public init?(json: JSON) {
-        guard let id = json["id"].int else { return nil }
-        guard let name = json["name"].string else { return nil }
-        guard let fullName = json["full_name"].string else { return nil }
-        guard let isPrivate = json["private"].bool else { return nil }
-        guard let HTMLURL = json["html_url"].string else { return nil }
-        self.description = json["description"].string
-        guard let fork = json["fork"].bool else { return nil }
-        guard let URL = json["url"].string else { return nil }
-        guard let createdAt = json["created_at"].string else { return nil }
-        guard let updatedAt = json["updated_at"].string else { return nil }
+        guard let id = json["id"].int,
+            let name = json["name"].string,
+            let fullName = json["full_name"].string,
+            let isPrivate = json["private"].bool,
+            let HTMLURL = json["html_url"].string,
+            let description = json["description"].string,
+            let fork = json["fork"].bool,
+            let URL = json["url"].string,
+            let createdAt = json["created_at"].string,
+            let updatedAt = json["updated_at"].string
+            else {
+                return nil
+        }
         /*
         self.pushedAt = try getOptionalDate(JSON: JSON, key: "pushed_at")
         self.homepage = try getOptionalValue(JSON: JSON, key: "homepage")
@@ -199,10 +196,13 @@ public struct Repository: JSONDecodable {
          */
         
         
-        guard let uHTMLURL = NSURL(string: HTMLURL) else { return nil }
-        guard let uURL = NSURL(string: URL) else { return nil }
-        guard let uCreatedAt = dateFormatter.date(from: createdAt) else { return nil }
-        guard let uUpdatedAt = dateFormatter.date(from: updatedAt) else { return nil }
+        guard let uHTMLURL = NSURL(string: HTMLURL),
+            let uURL = NSURL(string: URL),
+            let uCreatedAt = dateFormatter.date(from: createdAt),
+            let uUpdatedAt = dateFormatter.date(from: updatedAt)
+            else {
+                return nil
+        }
         
         
         self.id = id
@@ -210,6 +210,7 @@ public struct Repository: JSONDecodable {
         self.fullName = fullName
         self.isPrivate = isPrivate
         self.HTMLURL = uHTMLURL
+        self.description = description
         self.fork = fork
         self.URL = uURL
         self.createdAt = uCreatedAt
@@ -262,17 +263,3 @@ private let dateFormatter: DateFormatter = {
     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     return formatter
     }()
-
-
-private extension Array {
-    /**
-    Workaround for `map` with throwing closure
-    */
-    func mapWithRethrow<T>(transform: @noescape (Array.Generator.Element) throws -> T) rethrows -> [T] {
-        var mapped: [T] = []
-        for element in self {
-            mapped.append(try transform(element))
-        }
-        return mapped
-    }
-}
